@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from xml.etree.ElementTree import Element
 
 
 def node_tag(tag_name):
@@ -16,7 +17,7 @@ def node_tag(tag_name):
 
 
 class NodeContent:
-    def __init__(self, tag=None, content=None):
+    def __init__(self, tag: str = None, content=None) -> None:
         self.tag = tag
         self.content = content
 
@@ -24,14 +25,14 @@ class NodeContent:
     content = None
 
     def __str__(self) -> str:
-        return str({self.tag: self.content})
+        return f"'{self.tag}' = {self.content}"
 
     def __repr__(self) -> str:
-        return "<" + self.__class__.__name__ + " " + self.__str__() + ">"
+        return f"<{self.__class__.__name__} {self.__str__()}>"
 
 
 def read_node(
-    node, children_functions
+    node: Element, children_functions: list
 ) -> Tuple[List[NodeContent], List[str], List[str]]:
     # TODO: create test
     outputs = [
@@ -48,3 +49,15 @@ def read_node(
         if child_tag not in [child.tag for child in node]
     ]
     return outputs, unread_children, ignored_children
+
+
+def print_node(el: Element):
+    print(
+        {
+            "tag": el.tag,
+            "text": el.text,
+            "attrib": el.attrib,
+            "tail": el.tail,
+            "children": [child.tag for child in el.getchildren()],
+        }
+    )

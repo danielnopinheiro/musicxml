@@ -10,4 +10,3 @@ def read(tree_node: Element):
         tree_node, {"score-part": score_part.read, "part-group": part_group.read}
     )
     print(output, unread_children, ignored_children)
-    print(tree_node.getchildren())
