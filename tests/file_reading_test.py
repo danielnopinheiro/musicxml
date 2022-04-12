@@ -1,22 +1,21 @@
 import pytest
+from xml.etree.ElementTree import Element
 
 import musicxml
 
 
-class foo:
-    def __init__(self, tag):
-        self.tag = tag
-
-
-def test_part_list_node():
+@pytest.mark.parametrize(
+    "node_name, func",
+    [
+        ("work", musicxml.work.read),
+        ("work-title", musicxml.work.work_title.read),
+        ("part-list", musicxml.part_list.read),
+        ("part-group", musicxml.part_list.part_group.read),
+        ("score-part", musicxml.part_list.score_part.read),
+        ("part", musicxml.part.read),
+    ],
+)
+def test_node_reading(node_name, func):
     with pytest.raises(AssertionError) as e:
-        musicxml.get_part_list(foo("foo"))
-    assert "part-list" in e.value.args[0]
-    musicxml.get_part_list(foo("part-list"))
-
-
-def test_part_node():
-    with pytest.raises(AssertionError) as e:
-        musicxml.get_part(foo("foo"))
-    assert "part" in e.value.args[0]
-    musicxml.get_part(foo("part"))
+        func(Element("foo"))
+    assert node_name in e.value.args[0]

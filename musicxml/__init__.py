@@ -1,26 +1,21 @@
 import xml.etree.ElementTree as ET
 
+from .utils import read_node
+from . import work, part_list, part
+
 
 def read_musicxml(filename):
     tree = ET.parse(filename)
     root = tree.getroot()
 
-    for child in root:
-        if child.tag == "part-list":
-            get_part_list(child)
-        elif child.tag == "part":
-            get_part(child)
+    assert root.tag == "score-partwise"
 
-    print(tree)
+    print("\n-------------------\n")
 
+    outputs, unread_children, ignored_children = read_node(
+        root, {"work": work.read, "part-list": part_list.read, "part": part.read}
+    )
 
-def get_part_list(tree_node):
-    assert tree_node.tag == "part-list", f"Node tag '{tree_node.tag}' isn't 'part-list'"
+    print("\n-------------------\n")
 
-    print(tree_node)
-
-
-def get_part(tree_node):
-    assert tree_node.tag == "part", f"Node tag '{tree_node.tag}' isn't 'part'"
-
-    print(tree_node)
+    print(outputs, unread_children, ignored_children)
