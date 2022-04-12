@@ -34,16 +34,17 @@ def read_node(
     node, children_functions
 ) -> Tuple[List[NodeContent], List[str], List[str]]:
     # TODO: create test
-    children = {child.tag: child for child in node}
     outputs = [
-        NodeContent(child_tag, children_functions[child_tag](children[child_tag]))
-        for child_tag in children
-        if child_tag in children_functions
+        NodeContent(child.tag, children_functions[child.tag](child))
+        for child in node
+        if child.tag in children_functions
     ]
     unread_children = [
-        child_tag for child_tag in children if child_tag not in children_functions
+        child.tag for child in node if child.tag not in children_functions
     ]
     ignored_children = [
-        child_tag for child_tag in children_functions if child_tag not in children
+        child_tag
+        for child_tag in children_functions
+        if child_tag not in [child.tag for child in node]
     ]
     return outputs, unread_children, ignored_children
