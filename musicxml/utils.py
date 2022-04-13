@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from warnings import warn
 from xml.etree.ElementTree import Element
 
 
@@ -32,7 +33,7 @@ class NodeContent:
 
 
 def read_node(
-    node: Element, children_functions: list
+    node: Element, children_functions: list, show_warnings: bool = True
 ) -> Tuple[List[NodeContent], List[str], List[str]]:
     # TODO: create test
     outputs = [
@@ -40,14 +41,23 @@ def read_node(
         for child in node
         if child.tag in children_functions
     ]
+
     unread_children = [
         child.tag for child in node if child.tag not in children_functions
     ]
+
     ignored_children = [
         child_tag
         for child_tag in children_functions
         if child_tag not in [child.tag for child in node]
     ]
+
+    if show_warnings:
+        if unread_children != []:
+            warn(f"From '{node.tag}': didn't read nodes {', '.join(unread_children)}.")
+        if ignored_children != []:
+            warn(f"From '{node.tag}': ignored nodes {', '.join(ignored_children)}.")
+
     return outputs, unread_children, ignored_children
 
 

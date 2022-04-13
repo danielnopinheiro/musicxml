@@ -2,9 +2,9 @@ from xml.etree.ElementTree import Element
 
 from musicxml.utils import node_tag
 
-TAG = "work-title"
+TAG = "part-name"
 
 
 @node_tag(TAG)
 def read(tree_node: Element) -> str:
-    return tree_node.text.strip()
+    return tree_node.text
