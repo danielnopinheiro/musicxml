@@ -8,8 +8,10 @@ TAG = "part-list"
 
 
 class PartList:
+    def __init__(self):
+        self.score_part_list = []
 
-    score_part_list: List[score_part.ScorePart] = []
+    score_part_list: List[score_part.ScorePart] = None
 
     def add_score_part(self, score_part: score_part.ScorePart):
         self.score_part_list += [score_part]
@@ -20,9 +22,7 @@ class PartList:
 
 @node_tag(TAG)
 def read(tree_node: Element):
-    output, _, _ = read_node(
-        tree_node, {"score-part": score_part.read, "part-group": part_group.read}
-    )
+    output, _, _ = read_node(tree_node, [score_part, part_group])
     part_list = PartList()
     for node_content in output:
         if node_content.tag == part_group.TAG:

@@ -18,5 +18,5 @@ class Work:
 
 @node_tag(TAG)
 def read(tree_node: Element) -> Work:
-    output, _, _ = read_node(tree_node, {"work-title": work_title.read})
+    output, _, _ = read_node(tree_node, [work_title])
     return Work(output[0].content)

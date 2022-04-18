@@ -12,9 +12,7 @@ def read_musicxml(filename):
 
     print("\n-------------------\n")
 
-    outputs, _, _ = read_node(
-        root, {"work": work.read, "part-list": part_list.read, "part": part.read}
-    )
+    outputs, _, _ = read_node(root, [work, part_list, part])
 
     print("\n-------------------\n")
 

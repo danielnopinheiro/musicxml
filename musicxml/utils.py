@@ -3,9 +3,9 @@ from warnings import warn
 from xml.etree.ElementTree import Element
 
 
-def node_tag(tag_name):
+def node_tag(tag_name: str):
     def inner(func):
-        def wrapper(tree_node):
+        def wrapper(tree_node: Element):
             assert (
                 tree_node.tag == tag_name
             ), f"Node tag '{tree_node.tag}' isn't '{tag_name}'"
@@ -33,9 +33,13 @@ class NodeContent:
 
 
 def read_node(
-    node: Element, children_functions: list, show_warnings: bool = True
+    node: Element,
+    children_modules: list,
+    show_warnings: bool = True,
+    error_if_unread_children: bool = False,
 ) -> Tuple[List[NodeContent], List[str], List[str]]:
     # TODO: create test
+    children_functions = {m.TAG: m.read for m in children_modules}
     outputs = [
         NodeContent(child.tag, children_functions[child.tag](child))
         for child in node
@@ -57,6 +61,11 @@ def read_node(
             warn(f"From '{node.tag}': didn't read nodes {', '.join(unread_children)}.")
         if ignored_children != []:
             warn(f"From '{node.tag}': ignored nodes {', '.join(ignored_children)}.")
+    if error_if_unread_children:
+        if unread_children != []:
+            raise NotImplementedError(
+                f"From '{node.tag}': didn't read nodes {', '.join(unread_children)}."
+            )
 
     return outputs, unread_children, ignored_children
 
