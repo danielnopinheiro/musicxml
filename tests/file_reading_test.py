@@ -23,6 +23,10 @@ import musicxml
         musicxml.part.measure.note.pitch.step,
         musicxml.part.measure.note.pitch.octave,
         musicxml.part.measure.note.pitch.alter,
+        musicxml.part.measure.note.type,
+        musicxml.part.measure.note.lyric,
+        musicxml.part.measure.note.lyric.syllabic,
+        musicxml.part.measure.note.lyric.text,
     ],
 )
 def test_node_reading(module):

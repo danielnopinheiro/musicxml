@@ -35,6 +35,7 @@ class NodeContent:
 def read_node(
     node: Element,
     children_modules: list,
+    children_to_ignore: List[str] = [],
     show_warnings: bool = True,
     error_if_unread_children: bool = False,
 ) -> Tuple[List[NodeContent], List[str], List[str]]:
@@ -47,13 +48,16 @@ def read_node(
     ]
 
     unread_children = [
-        child.tag for child in node if child.tag not in children_functions
+        child.tag
+        for child in node
+        if child.tag not in children_functions and child.tag not in children_to_ignore
     ]
 
     ignored_children = [
         child_tag
         for child_tag in children_functions
         if child_tag not in [child.tag for child in node]
+        and child_tag not in children_to_ignore
     ]
 
     if show_warnings:
