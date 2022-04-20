@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List, Tuple
 from warnings import warn
 from xml.etree.ElementTree import Element
@@ -32,46 +33,56 @@ class NodeContent:
         return f"<{self.__class__.__name__} {self.__str__()}>"
 
 
+class StartContinueStop(Enum):
+    start = "start"
+    cont = "continue"
+    stop = "stop"
+
+
 def read_node(
     node: Element,
     children_modules: list,
     children_to_ignore: List[str] = [],
     show_warnings: bool = True,
-    error_if_unread_children: bool = False,
+    error_if_unread_children: bool = True,
 ) -> Tuple[List[NodeContent], List[str], List[str]]:
     # TODO: create test
     children_functions = {m.TAG: m.read for m in children_modules}
-    outputs = [
+    node_contents = [
         NodeContent(child.tag, children_functions[child.tag](child))
         for child in node
         if child.tag in children_functions
     ]
 
-    unread_children = [
-        child.tag
-        for child in node
-        if child.tag not in children_functions and child.tag not in children_to_ignore
-    ]
+    if show_warnings or error_if_unread_children:
+        unread_children = [
+            child.tag
+            for child in node
+            if child.tag not in children_functions
+            and child.tag not in children_to_ignore
+        ]
 
-    ignored_children = [
-        child_tag
-        for child_tag in children_functions
-        if child_tag not in [child.tag for child in node]
-        and child_tag not in children_to_ignore
-    ]
+        ignored_children = [
+            child_tag
+            for child_tag in children_functions
+            if child_tag not in [child.tag for child in node]
+            and child_tag not in children_to_ignore
+        ]
 
-    if show_warnings:
-        if unread_children != []:
-            warn(f"From '{node.tag}': didn't read nodes {', '.join(unread_children)}.")
-        if ignored_children != []:
-            warn(f"From '{node.tag}': ignored nodes {', '.join(ignored_children)}.")
-    if error_if_unread_children:
-        if unread_children != []:
-            raise NotImplementedError(
-                f"From '{node.tag}': didn't read nodes {', '.join(unread_children)}."
-            )
+        if show_warnings:
+            if unread_children != []:
+                warn(
+                    f"From '{node.tag}': didn't read nodes {', '.join(unread_children)}."
+                )
+            if ignored_children != []:
+                warn(f"From '{node.tag}': ignored nodes {', '.join(ignored_children)}.")
+        if error_if_unread_children:
+            if unread_children != []:
+                raise NotImplementedError(
+                    f"From '{node.tag}': didn't read nodes {', '.join(unread_children)}."
+                )
 
-    return outputs, unread_children, ignored_children
+    return node_contents
 
 
 def print_node(el: Element):

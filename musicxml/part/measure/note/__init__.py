@@ -1,6 +1,6 @@
 from typing import List
 from xml.etree.ElementTree import Element
-from musicxml.part.measure.note import dot, duration, lyric, pitch, voice
+from musicxml.part.measure.note import dot, duration, lyric, pitch, voice, notations
 import musicxml.part.measure.note.type as note_type
 from musicxml.part.measure.note.pitch import Pitch
 
@@ -31,15 +31,15 @@ class Note:
 
 @node_tag(TAG)
 def read(tree_node: Element) -> Note:
-    output, _, _ = read_node(
+    node_contents = read_node(
         tree_node,
-        [dot, duration, voice, pitch, note_type, lyric],
+        [dot, duration, voice, pitch, note_type, lyric, notations],
         children_to_ignore=["stem", "beam"],
         error_if_unread_children=True,
     )
-    # print(output)
+    # print(node_contents)
     note = Note()
-    for node_content in output:
+    for node_content in node_contents:
         if node_content.tag == dot.TAG:
             note.dots += 1
         elif node_content.tag == duration.TAG:

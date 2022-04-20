@@ -27,6 +27,8 @@ import musicxml
         musicxml.part.measure.note.lyric,
         musicxml.part.measure.note.lyric.syllabic,
         musicxml.part.measure.note.lyric.text,
+        musicxml.part.measure.note.notations,
+        musicxml.part.measure.note.notations.slur,
     ],
 )
 def test_node_reading(module):

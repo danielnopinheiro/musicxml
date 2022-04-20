@@ -25,9 +25,9 @@ class Measure:
 @node_tag(TAG)
 def read(tree_node: Element) -> Measure:
     measure = Measure(tree_node.attrib["number"])
-    output, _, _ = read_node(tree_node, [note])
+    node_contents = read_node(tree_node, [note])
 
-    for node_content in output:
+    for node_content in node_contents:
         if node_content.tag == note.TAG:
             measure.add_note(node_content.content)
 

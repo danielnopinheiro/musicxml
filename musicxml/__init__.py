@@ -12,8 +12,8 @@ def read_musicxml(filename):
 
     print("\n-------------------\n")
 
-    outputs, _, _ = read_node(root, [work, part_list, part])
+    node_contents = read_node(root, [work, part_list, part])
 
     print("\n-------------------\n")
 
-    print(outputs)
+    print(node_contents)

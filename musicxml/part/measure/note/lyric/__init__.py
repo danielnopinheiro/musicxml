@@ -26,9 +26,11 @@ class Lyric:
 
 @node_tag(TAG)
 def read(tree_node: Element) -> Lyric:
-    output, _, _ = read_node(tree_node, [syllabic, text], error_if_unread_children=True)
+    node_contents = read_node(
+        tree_node, [syllabic, text], error_if_unread_children=True
+    )
     t = ""
-    for node_content in output:
+    for node_content in node_contents:
         if node_content.tag == syllabic.TAG:
             s = node_content.content
         elif node_content.tag == text.TAG:

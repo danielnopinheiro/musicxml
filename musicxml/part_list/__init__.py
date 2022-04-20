@@ -22,9 +22,9 @@ class PartList:
 
 @node_tag(TAG)
 def read(tree_node: Element):
-    output, _, _ = read_node(tree_node, [score_part, part_group])
+    node_contents = read_node(tree_node, [score_part, part_group])
     part_list = PartList()
-    for node_content in output:
+    for node_content in node_contents:
         if node_content.tag == part_group.TAG:
             # TODO
             pass

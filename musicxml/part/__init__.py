@@ -28,9 +28,9 @@ class Part:
 @node_tag(TAG)
 def read(tree_node: Element) -> Part:
     part = Part(tree_node.attrib["id"])
-    output, _, _ = read_node(tree_node, [measure])
+    node_contents = read_node(tree_node, [measure])
 
-    for node_content in output:
+    for node_content in node_contents:
         if node_content.tag == measure.TAG:
             part.add_measure(node_content.content)
 

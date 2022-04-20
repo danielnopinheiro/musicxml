@@ -21,6 +21,16 @@ class ScorePart:
 @node_tag(TAG)
 def read(tree_node: Element) -> ScorePart:
     score_part_id = tree_node.attrib["id"]
-    output, _, _ = read_node(tree_node, [part_name], show_warnings=False)
-    score_part_name = output[0].content
+    node_contents = read_node(
+        tree_node,
+        [part_name],
+        children_to_ignore=[
+            "part-abbreviation",
+            "score-instrument",
+            "midi-device",
+            "midi-instrument",
+        ],
+        show_warnings=False,
+    )
+    score_part_name = node_contents[0].content
     return ScorePart(score_part_id, score_part_name)
