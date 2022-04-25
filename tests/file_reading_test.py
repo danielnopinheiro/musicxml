@@ -29,6 +29,9 @@ import musicxml
         musicxml.part.measure.note.lyric.text,
         musicxml.part.measure.note.notations,
         musicxml.part.measure.note.notations.slur,
+        musicxml.part.measure.barline,
+        musicxml.part.measure.barline.repeat,
+        musicxml.part.measure.barline.bar_style,
     ],
 )
 def test_node_reading(module):

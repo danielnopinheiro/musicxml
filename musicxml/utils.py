@@ -39,13 +39,19 @@ class StartContinueStop(Enum):
     stop = "stop"
 
 
+class Location(Enum):
+    left = "left"
+    middle = "middle"
+    right = "right"
+
+
 def read_node(
     node: Element,
     children_modules: list,
     children_to_ignore: List[str] = [],
     show_warnings: bool = True,
     error_if_unread_children: bool = True,
-) -> Tuple[List[NodeContent], List[str], List[str]]:
+) -> List[NodeContent]:
     # TODO: create test
     children_functions = {m.TAG: m.read for m in children_modules}
     node_contents = [
