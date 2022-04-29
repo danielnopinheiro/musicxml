@@ -32,6 +32,17 @@ import musicxml
         musicxml.part.measure.barline,
         musicxml.part.measure.barline.repeat,
         musicxml.part.measure.barline.bar_style,
+        musicxml.part.measure.attributes,
+        musicxml.part.measure.attributes.divisions,
+        musicxml.part.measure.attributes.key,
+        musicxml.part.measure.attributes.key.fifths,
+        musicxml.part.measure.attributes.time,
+        musicxml.part.measure.attributes.time.beats,
+        musicxml.part.measure.attributes.time.beat_type,
+        musicxml.part.measure.attributes.clef,
+        musicxml.part.measure.attributes.clef.sign,
+        musicxml.part.measure.attributes.clef.line,
+        musicxml.part.measure.attributes.clef.clef_octave_change,
     ],
 )
 def test_node_reading(module):

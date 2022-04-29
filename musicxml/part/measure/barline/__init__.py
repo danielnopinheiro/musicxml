@@ -2,7 +2,7 @@ from xml.etree.ElementTree import Element
 from musicxml.part.measure.barline import bar_style, repeat
 from musicxml.part.measure.barline.repeat import Repeat
 
-from musicxml.utils import Location, node_tag, print_node, read_node
+from musicxml.utils import Location, node_tag, read_node
 
 TAG = "barline"
 
@@ -21,7 +21,6 @@ class Barline:
 
 @node_tag(TAG)
 def read(tree_node: Element) -> Barline:
-    print_node(tree_node)
     location = (
         Location(tree_node.attrib["location"])
         if "location" in tree_node.attrib
