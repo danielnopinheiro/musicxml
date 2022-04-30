@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Tuple
+from typing import List
 from warnings import warn
 from xml.etree.ElementTree import Element
 
@@ -43,6 +43,41 @@ class Location(Enum):
     left = "left"
     middle = "middle"
     right = "right"
+
+
+class NoteType(Enum):
+    _1024th = "1024th"
+    _512th = "512th"
+    _256th = "256th"
+    _128th = "128th"
+    _64th = "64th"
+    _32nd = "32nd"
+    _16th = "16th"
+    eighth = "eighth"
+    quarter = "quarter"
+    half = "half"
+    whole = "whole"
+    breve = "breve"
+    long = "long"
+    maxima = "maxima"
+
+
+LOG_VALUES = {
+    NoteType._1024th: 10,
+    NoteType._512th: 9,
+    NoteType._256th: 8,
+    NoteType._128th: 7,
+    NoteType._64th: 6,
+    NoteType._32nd: 5,
+    NoteType._16th: 4,
+    NoteType.eighth: 3,
+    NoteType.quarter: 2,
+    NoteType.half: 1,
+    NoteType.whole: 0,
+    NoteType.breve: -1,
+    NoteType.long: -2,
+    NoteType.maxima: -3,
+}
 
 
 def read_node(

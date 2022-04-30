@@ -1,7 +1,7 @@
 from enum import Enum
 from xml.etree.ElementTree import Element
 
-from musicxml.utils import node_tag, print_node
+from musicxml.utils import node_tag
 
 TAG = "repeat"
 

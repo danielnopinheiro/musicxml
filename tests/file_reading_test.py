@@ -43,6 +43,12 @@ import musicxml
         musicxml.part.measure.attributes.clef.sign,
         musicxml.part.measure.attributes.clef.line,
         musicxml.part.measure.attributes.clef.clef_octave_change,
+        musicxml.part.measure.direction,
+        musicxml.part.measure.direction.direction_type,
+        musicxml.part.measure.direction.direction_type.metronome,
+        musicxml.part.measure.direction.direction_type.metronome.beat_unit,
+        musicxml.part.measure.direction.direction_type.metronome.beat_unit_dot,
+        musicxml.part.measure.direction.direction_type.metronome.per_minute,
     ],
 )
 def test_node_reading(module):

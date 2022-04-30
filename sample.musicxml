@@ -140,10 +140,6 @@
             <per-minute>89.1790</per-minute>
             </metronome>
           </direction-type>
-        <direction-type>
-          <words default-x="-63.31" relative-y="20.00" font-weight="bold" font-size="12">.1790
-</words>
-          </direction-type>
         <sound tempo="44.5895"/>
         </direction>
       <note default-x="138.78" default-y="-35.00">
