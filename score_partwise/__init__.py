@@ -1,6 +1,8 @@
 from typing import List
 from xml.etree.ElementTree import Element
 
+from score_partwise.part.measure.note import Note
+
 from .utils import node_tag, read_node
 from . import work, part_list, part
 from .work import Work
@@ -25,17 +27,34 @@ class ScorePartwise:
         self.parts = parts
         self.divisions = divisions
         self.metronome = metronome
+
+        self.__compute_division_real_time()
+        self.__set_notes_times()
+
         # TODO assert things
 
     work: Work = None
     part_list: PartList = None
     parts: List[Part] = None
 
-    divisions: int
-    metronome: Metronome
+    divisions: int = None
+    metronome: Metronome = None
+
+    division_real_time = None
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} '{self.work.work_title}' {'/'.join([p_l.name for p_l in self.part_list.score_part_list])}>"
+
+    def __compute_division_real_time(self):
+        quarter_seconds = 60 / self.metronome.quarters_per_minute()
+        self.division_real_time = quarter_seconds / self.divisions
+
+    def __set_notes_times(self):
+        for p in self.parts:
+            for m in p.measure_list:
+                for n in m.contents:
+                    if type(n) is Note:
+                        n.set_real_time_duration(self.division_real_time)
 
 
 @node_tag(TAG)

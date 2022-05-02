@@ -15,7 +15,7 @@ class Type:
         return f"<{self.__class__.__name__} {self.note_type}>"
 
     def __str__(self) -> str:
-        return self.note_type
+        return self.note_type.value
 
     def to_ly(self) -> str:
         if LOG_VALUES[self.note_type] >= 0:

@@ -10,6 +10,7 @@ from score_partwise.part.measure.note import (
 )
 import score_partwise.part.measure.note.type as note_type
 from score_partwise.part.measure.note.pitch import Pitch
+from score_partwise.part.measure.note.type import Type
 
 from score_partwise.utils import node_tag, read_node
 
@@ -26,14 +27,19 @@ class Note:
     tie = None
     dots: int = 0
     voice: str = None
-    note_type: str = None  # assert equivalency with duration
+    note_type: Type = None  # TODO assert equivalency with duration
     lyrics: List[lyric.Lyric] = None
+
+    real_time_duration = None
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} {self.pitch} duration={self.duration} ({self.note_type}{'.'*self.dots})>"
 
     def to_ly(self):
         raise NotImplementedError()
+
+    def set_real_time_duration(self, division_real_time: float):
+        self.real_time_duration = self.duration * division_real_time
 
 
 @node_tag(TAG)
